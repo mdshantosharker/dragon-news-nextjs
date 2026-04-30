@@ -9,13 +9,15 @@ const Navbar = () => {
       <div></div>
       <ul className="flex items-center gap-5 text-gray-700">
         <li>
-          <NavLink href={'/'}>Home</NavLink>
+          <NavLink href={"/"}>Home</NavLink>
         </li>
         <li>
           <NavLink href={"/about"}>About</NavLink>
         </li>
         <li>
-          <NavLink href={"/career"} className={'text-yellow-300'}>Career</NavLink>
+          <NavLink href={"/career"} className={"text-yellow-300"}>
+            Career
+          </NavLink>
         </li>
       </ul>
 
