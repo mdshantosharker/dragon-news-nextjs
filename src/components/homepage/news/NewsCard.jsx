@@ -49,7 +49,7 @@ const NewsCard = ({ news }) => {
             <h2 className="flex items-center gap-2"><FaEye />{news.total_view}</h2>
           </div>
 
-          <Link href={"/news/${news._id}"}>
+          <Link href={`/news/${news._id}`}>
             <button className="btn">See Details</button>
           </Link>
         </div>
