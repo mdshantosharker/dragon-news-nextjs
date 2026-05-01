@@ -1,10 +1,13 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { BiSolidHide } from "react-icons/bi";
+import { FaEye } from "react-icons/fa";
 
 const LoginPage = () => {
+  const [isShowPassword, setIsShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -18,7 +21,7 @@ const LoginPage = () => {
       email: email,
       password: password,
       rememberMe: true,
-      callbackURL: "/", 
+      callbackURL: "/",
     });
     console.log(res, error);
     if (error) {
@@ -50,16 +53,24 @@ const LoginPage = () => {
           {errors.password && (
             <p className="text-red-400">{errors.email.message}</p>
           )}
-          <fieldset className="fieldset">
+          <fieldset className="fieldset relative">
             <legend className="fieldset-legend">Password</legend>
+
             <input
-              type="password"
+              type={isShowPassword ? "text" : "password"}
               className="input"
               {...register("password", {
                 required: "Password field is required",
               })}
               placeholder="Type your Password"
             />
+
+            <span
+              className="absolute right-2 top-4 cursor-pointer"
+              onClick={() => setIsShowPassword(!isShowPassword)}
+            >
+              {isShowPassword ? <FaEye /> : <BiSolidHide />}
+            </span>
           </fieldset>
           {errors.password && (
             <p className="text-red-400">{errors.password.message}</p>

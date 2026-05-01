@@ -1,9 +1,27 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import userAvatar from "@/assets/user.png";
 import NavLink from "./NavLink";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+
 const Navbar = () => {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+  console.log(session, user);
+
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login"); // redirect to login page
+        },
+      },
+    });
+  };
   return (
     <div className="flex container items-center mx-auto justify-between mt-5">
       <div></div>
@@ -21,19 +39,42 @@ const Navbar = () => {
         </li>
       </ul>
 
-      <div className="flex  items-center gap-5">
-        <Image
-          src={userAvatar}
-          width={40}
-          height={40}
-          alt="User avatar"
-        ></Image>
+      {isPending ? (
+        <span className="loading loading-infinity  loading-xl"></span>
+      ) : user ? (
+        <>
+          <div className="flex  items-center gap-5">
+            <h2>Hello , {user?.name}</h2>
+            <Image
+              className=""
+              src={user?.image || userAvatar}
+              width={50}
+              height={50}
+              alt="User avatar"
+            ></Image>
 
-        <Link href={"/login"}>
-          {" "}
-          <button className="btn px-10  bg-gray-700 text-white">Login</button>
-        </Link>
-      </div>
+            <Link href={""}>
+              <button
+                onClick={handleSignOut}
+                className="btn px-10  bg-red-700 text-white"
+              >
+                LogOut
+              </button>
+            </Link>
+          </div>
+        </>
+      ) : (
+        <>
+          <Link href={"/login"}>
+            <button
+              onClick={handleSignOut}
+              className="btn px-10  bg-gray-700  text-white"
+            >
+              LogIn
+            </button>
+          </Link>
+        </>
+      )}
     </div>
   );
 };
