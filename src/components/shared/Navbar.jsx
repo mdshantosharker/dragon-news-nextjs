@@ -29,9 +29,10 @@ const Navbar = () => {
           alt="User avatar"
         ></Image>
 
-        <button className="btn px-10   bg-gray-700 text-white">
-          <Link href={"/login"}>Login</Link>
-        </button>
+        <Link href={"/login"}>
+          {" "}
+          <button className="btn px-10  bg-gray-700 text-white">Login</button>
+        </Link>
       </div>
     </div>
   );
